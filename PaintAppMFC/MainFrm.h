@@ -32,6 +32,7 @@ protected:  // control bar embedded members
 	CToolBar          m_wndToolBar;
 	CStatusBar        m_wndStatusBar;
 	CToolBar		  m_wndDrawToolBar;
+	CToolBar		  m_wndColorToolBar;
 	// Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(CPaintAppMFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_COMMAND(ID_TOOLS_FREE, &CPaintAppMFCView::OnToolsFree)
 
+	ON_COMMAND_RANGE(ID_COLORS_BLACK, ID_COLORS_MAGENTA, OnColors)
 
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
@@ -64,6 +65,10 @@ void CPaintAppMFCView::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+	
+	// The BitBlt function performs a bit-block transfer of the color data corresponding to a rectangle of pixels
+	// from the specified source device context into a destination device context.
+
 	pDC->BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_SDC, 0, 0, SRCCOPY);
 	// TODO: add draw code for native data here
 }
@@ -115,7 +120,8 @@ void CPaintAppMFCView::OnInitialUpdate()
 	CClientDC dc(this);
 	FileName = "";
 
-	
+	//The CreateCompatibleDC function creates a memory device context(DC) compatible with the specified device.
+
 	m_MDC.CreateCompatibleDC(&dc);
 	m_bmpMDC.CreateCompatibleBitmap(&dc, m_rect.Width() + 500, m_rect.Height() + 500);
 	m_MDC.SelectObject(&m_bmpMDC);
@@ -141,14 +147,28 @@ void CPaintAppMFCView::OnInitialUpdate()
 // CPaintAppMFCView message handlers
 void CPaintAppMFCView::OnToolsFree()
 {
-
+	pWidth = 3;
 	// TODO: Add your command handler code here
 }
 
+void CPaintAppMFCView::OnColors(UINT nID) {
+	chooseColor = nID;
+	static COLORREF crColors[8] = {
+		RGB(0, 0, 0),
+		RGB(255, 255, 255),
+		RGB(255, 255, 0),
+		RGB(255, 0, 0),
+		RGB(0, 255, 0),
+		RGB(0, 0, 255),
+		RGB(0, 255, 255),
+		RGB(255, 0, 255)
+		
+	};
+	m_Color = crColors[chooseColor - ID_COLORS_BLACK];
+}
 
 void CPaintAppMFCView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	pWidth = 1;
 
 	//MessageBox(TEXT("wtf"), 0, MB_OK);
 	m_lastDC[index++].BitBlt(0, 0, m_rect.Width(), m_rect.Height(), &m_MDC, 0, 0, SRCCOPY);
@@ -164,8 +184,7 @@ void CPaintAppMFCView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CPaintAppMFCView::OnLButtonUp(UINT nFlags, CPoint point)
 {
-	pWidth = 1;
-
+	
 	CPen Pen(PS_SOLID, pWidth, m_Color);
 	m_MDC.SelectObject(Pen);
 	m_MDC.SelectStockObject(NULL_BRUSH);
@@ -179,8 +198,7 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 {
 
 	if (nFlags && MK_LBUTTON) {
-		pWidth = 1;
-
+		
 		//MessageBox(TEXT("hihi"), 0, MB_OK);
 		CPen Pen(PS_SOLID, pWidth, m_Color);
 		m_SDC.SelectObject(Pen);

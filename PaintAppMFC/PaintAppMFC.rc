@@ -83,6 +83,10 @@ IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
 IDR_DRAWTOOLBAR         BITMAP                  "res\\toolbar1.bmp"
 
+IDRETRY                 BITMAP                  "res\\bmp00001.bmp"
+
+IDR_COLORTOOLBAR        BITMAP                  "res\\bmp00002.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -107,6 +111,18 @@ IDR_DRAWTOOLBAR TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_TOOLS_FREE
     BUTTON      ID_BUTTON32779
+END
+
+IDR_COLORTOOLBAR TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_COLORS_BLACK
+    BUTTON      ID_COLORS_WHITE
+    BUTTON      ID_COLORS_RED
+    BUTTON      ID_COLORS_YELLOW
+    BUTTON      ID_COLORS_GREEN
+    BUTTON      ID_COLORS_BLUE
+    BUTTON      ID_COLORS_CYAN
+    BUTTON      ID_COLORS_MAGENTA
 END
 
 
