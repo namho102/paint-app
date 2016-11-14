@@ -8,8 +8,11 @@
 #define IDR_PaintAppMFCTYPE             130
 #define IDR_DRAWTOOLBAR                 312
 #define IDR_COLORTOOLBAR                318
-#define ID_TOOLS_FREE                   32778
-#define ID_BUTTON32779                  32779
+#define ID_TOOLS_FREE                   32800
+#define ID_TOOLS_LINE                   32801
+#define ID_TOOLS_SPRAY                  32802
+#define ID_TOOLS_BRUSH                  32803
+#define ID_BUTTON32779                  32804
 
 #define ID_COLORS_BLACK                 32784
 #define ID_COLORS_WHITE                 32785
@@ -20,12 +23,14 @@
 #define ID_COLORS_CYAN                  32790
 #define ID_COLORS_MAGENTA               32791
 
+
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        320
-#define _APS_NEXT_COMMAND_VALUE         32800
+#define _APS_NEXT_COMMAND_VALUE         32801
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

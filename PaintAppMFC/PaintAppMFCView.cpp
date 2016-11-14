@@ -26,7 +26,8 @@ BEGIN_MESSAGE_MAP(CPaintAppMFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
-	ON_COMMAND(ID_TOOLS_FREE, &CPaintAppMFCView::OnToolsFree)
+	//ON_COMMAND(ID_TOOLS_FREE, &CPaintAppMFCView::OnToolsFree)
+	ON_COMMAND_RANGE(ID_TOOLS_FREE, ID_TOOLS_SPRAY, OnDrawTools)
 
 	ON_COMMAND_RANGE(ID_COLORS_BLACK, ID_COLORS_MAGENTA, OnColors)
 
@@ -145,10 +146,15 @@ void CPaintAppMFCView::OnInitialUpdate()
 }
 
 // CPaintAppMFCView message handlers
-void CPaintAppMFCView::OnToolsFree()
-{
-	pWidth = 3;
-	// TODO: Add your command handler code here
+//void CPaintAppMFCView::OnToolsFree()
+//{
+//	pWidth = 3;
+//	// TODO: Add your command handler code here
+//}
+
+void CPaintAppMFCView::OnDrawTools(UINT nID) {
+	dType = nID;
+	pWidth = 1;
 }
 
 void CPaintAppMFCView::OnColors(UINT nID) {
@@ -169,11 +175,29 @@ void CPaintAppMFCView::OnColors(UINT nID) {
 
 void CPaintAppMFCView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-
 	//MessageBox(TEXT("wtf"), 0, MB_OK);
 	m_lastDC[index++].BitBlt(0, 0, m_rect.Width(), m_rect.Height(), &m_MDC, 0, 0, SRCCOPY);
 	pointFrom = pointStart = point;
 	
+	switch (dType)
+	{
+	case ID_TOOLS_FREE: {
+		m_MDC.MoveTo(pointStart);
+		m_MDC.LineTo(point);
+		pointStart = point;
+		break;
+	}
+	case ID_TOOLS_SPRAY: {
+		for (int i = 0; i < 50; i++) {	
+			int dx = rand() % (31) - 10;
+			int dy = rand() % (31) - 10;
+			m_MDC.SetPixel(point.x + dx, point.y + dy, m_Color);
+		}
+		break;
+	}
+	default:
+		break;
+	}
 	m_MDC.MoveTo(pointStart);
 	m_MDC.LineTo(point);
 	pointStart = point;
@@ -206,10 +230,28 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 		m_MDC.SelectObject(Pen);
 		m_MDC.SelectStockObject(NULL_BRUSH);
 		m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
-			
-		m_MDC.MoveTo(pointStart);
-		m_MDC.LineTo(point);
-		pointStart = point;
+		switch (dType)
+		{
+		case ID_TOOLS_FREE: {
+			m_MDC.MoveTo(pointStart);
+			m_MDC.LineTo(point);
+			pointStart = point;
+			break;
+		}
+		case ID_TOOLS_SPRAY: {
+			for (int i = 0; i < 100; i++) {
+				//int dx = rand() % (41) - 20;
+				//int dy = rand() % (41) - 20;
+				int dx = rand() % (31) - 10;
+				int dy = rand() % (31) - 10;
+				m_MDC.SetPixel(point.x + dx, point.y + dy, m_Color);
+			}
+			break;
+		}
+		default:
+			break;
+		}
+		
 	
 	}
 	Invalidate(false);
