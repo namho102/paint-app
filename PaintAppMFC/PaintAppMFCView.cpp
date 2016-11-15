@@ -27,7 +27,7 @@ BEGIN_MESSAGE_MAP(CPaintAppMFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	//ON_COMMAND(ID_TOOLS_FREE, &CPaintAppMFCView::OnToolsFree)
-	ON_COMMAND_RANGE(ID_TOOLS_FREE, ID_TOOLS_SPRAY, OnDrawTools)
+	ON_COMMAND_RANGE(ID_TOOLS_FREE, ID_BUTTON_MAX, OnDrawTools)
 
 	ON_COMMAND_RANGE(ID_COLORS_BLACK, ID_COLORS_MAGENTA, OnColors)
 
@@ -219,11 +219,31 @@ void CPaintAppMFCView::OnLButtonUp(UINT nFlags, CPoint point)
 
 
 void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
-{
-
+{	
+	if (dType == ID_TOOLS_ERASE) {
+		//ShowCursor(false);
+		m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
+		CPen Pen(PS_SOLID, 1, RGB(0, 0, 0));
+		m_SDC.SelectObject(Pen);
+		m_SDC.SelectStockObject(NULL_BRUSH);
+		m_SDC.Rectangle(point.x - 5, point.y - 5, point.x + 5, point.y + 5);
+	}
+	
 	if (nFlags && MK_LBUTTON) {
+		//if (dType == ID_TOOLS_ERASE) {
+		//	CPen Pen(PS_SOLID, pWidth, m_Color);
+		//	m_SDC.SelectObject(Pen);
+		//	m_SDC.SelectStockObject(NULL_BRUSH);
+		//	m_MDC.SelectObject(Pen);
+		//	m_MDC.SelectStockObject(NULL_BRUSH);
+		//	m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
+		//
+		//	m_MDC.FillSolidRect(point.x - 5, point.y - 5, 10, 10, RGB(255, 255, 152));
+		//}
+		//else {
+		//	
+		//}
 		
-		//MessageBox(TEXT("hihi"), 0, MB_OK);
 		CPen Pen(PS_SOLID, pWidth, m_Color);
 		m_SDC.SelectObject(Pen);
 		m_SDC.SelectStockObject(NULL_BRUSH);
@@ -236,6 +256,15 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 			m_MDC.MoveTo(pointStart);
 			m_MDC.LineTo(point);
 			pointStart = point;
+			break;
+		}
+		case ID_TOOLS_ERASE: {
+			//CPen pBrush(PS_SOLID, pWidth + 9, m_Color);
+			//m_MDC.SelectObject(pBrush);
+			//m_MDC.MoveTo(pointStart);
+			//m_MDC.LineTo(point);
+			//pointStart = point;
+			m_MDC.FillSolidRect(point.x - 5, point.y - 5, 10, 10, m_Color);
 			break;
 		}
 		case ID_TOOLS_SPRAY: {
@@ -251,6 +280,7 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 		default:
 			break;
 		}
+		
 		
 	
 	}
