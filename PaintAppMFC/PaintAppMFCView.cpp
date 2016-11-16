@@ -70,7 +70,7 @@ void CPaintAppMFCView::OnDraw(CDC* pDC)
 	// The BitBlt function performs a bit-block transfer of the color data corresponding to a rectangle of pixels
 	// from the specified source device context into a destination device context.
 
-	pDC->BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_SDC, 0, 0, SRCCOPY);
+	pDC->BitBlt(0, 0, m_rect.Width() , m_rect.Height() , &m_SDC, 0, 0, SRCCOPY);
 	// TODO: add draw code for native data here
 }
 
@@ -124,15 +124,15 @@ void CPaintAppMFCView::OnInitialUpdate()
 	//The CreateCompatibleDC function creates a memory device context(DC) compatible with the specified device.
 
 	m_MDC.CreateCompatibleDC(&dc);
-	m_bmpMDC.CreateCompatibleBitmap(&dc, m_rect.Width() + 500, m_rect.Height() + 500);
+	m_bmpMDC.CreateCompatibleBitmap(&dc, m_rect.Width() , m_rect.Height() );
 	m_MDC.SelectObject(&m_bmpMDC);
 
 	m_SDC.CreateCompatibleDC(&dc);
-	m_bmpSDC.CreateCompatibleBitmap(&dc, m_rect.Width() + 500, m_rect.Height() + 500);
+	m_bmpSDC.CreateCompatibleBitmap(&dc, m_rect.Width() , m_rect.Height() );
 	m_SDC.SelectObject(&m_bmpSDC);
 
-	m_MDC.FillSolidRect(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, RGB(255, 255, 255));
-	m_SDC.FillSolidRect(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, RGB(255, 255, 255));
+	m_MDC.FillSolidRect(0, 0, m_rect.Width() , m_rect.Height() , RGB(255, 255, 255));
+	m_SDC.FillSolidRect(0, 0, m_rect.Width() , m_rect.Height() , RGB(255, 255, 255));
 
 
 	for (int i = 0; i < 100; i = i + 1) {
@@ -198,9 +198,7 @@ void CPaintAppMFCView::OnLButtonDown(UINT nFlags, CPoint point)
 	default:
 		break;
 	}
-	m_MDC.MoveTo(pointStart);
-	m_MDC.LineTo(point);
-	pointStart = point;
+
 	
 	Invalidate(false);
 }
@@ -213,7 +211,7 @@ void CPaintAppMFCView::OnLButtonUp(UINT nFlags, CPoint point)
 	m_MDC.SelectObject(Pen);
 	m_MDC.SelectStockObject(NULL_BRUSH);
 	
-	m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
+	m_SDC.BitBlt(0, 0, m_rect.Width() , m_rect.Height() , &m_MDC, 0, 0, SRCCOPY);
 	Invalidate(false);
 }
 
@@ -222,7 +220,7 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 {	
 	if (dType == ID_TOOLS_ERASE) {
 		//ShowCursor(false);
-		m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
+		m_SDC.BitBlt(0, 0, m_rect.Width() , m_rect.Height() , &m_MDC, 0, 0, SRCCOPY);
 		CPen Pen(PS_SOLID, 1, RGB(0, 0, 0));
 		m_SDC.SelectObject(Pen);
 		m_SDC.SelectStockObject(NULL_BRUSH);
@@ -230,26 +228,14 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	
 	if (nFlags && MK_LBUTTON) {
-		//if (dType == ID_TOOLS_ERASE) {
-		//	CPen Pen(PS_SOLID, pWidth, m_Color);
-		//	m_SDC.SelectObject(Pen);
-		//	m_SDC.SelectStockObject(NULL_BRUSH);
-		//	m_MDC.SelectObject(Pen);
-		//	m_MDC.SelectStockObject(NULL_BRUSH);
-		//	m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
-		//
-		//	m_MDC.FillSolidRect(point.x - 5, point.y - 5, 10, 10, RGB(255, 255, 152));
-		//}
-		//else {
-		//	
-		//}
 		
 		CPen Pen(PS_SOLID, pWidth, m_Color);
 		m_SDC.SelectObject(Pen);
 		m_SDC.SelectStockObject(NULL_BRUSH);
 		m_MDC.SelectObject(Pen);
 		m_MDC.SelectStockObject(NULL_BRUSH);
-		m_SDC.BitBlt(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, &m_MDC, 0, 0, SRCCOPY);
+		//m_SDC.BitBlt(0, 0, m_rect.Width() , m_rect.Height() , &m_MDC, 0, 0, SRCCOPY);
+		m_SDC.BitBlt(0, 0, m_rect.Width(), m_rect.Height(), &m_MDC, 0, 0, SRCCOPY);
 		switch (dType)
 		{
 		case ID_TOOLS_FREE: {
@@ -259,11 +245,12 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 		case ID_TOOLS_ERASE: {
+
 			//CPen pBrush(PS_SOLID, pWidth + 9, m_Color);
 			//m_MDC.SelectObject(pBrush);
-			//m_MDC.MoveTo(pointStart);
-			//m_MDC.LineTo(point);
-			//pointStart = point;
+			//m_MDC.SelectStockObject(NULL_BRUSH);
+			//m_MDC.Rectangle(point.x - 5, point.y - 5, point.x + 5, point.y + 5);
+
 			m_MDC.FillSolidRect(point.x - 5, point.y - 5, 10, 10, m_Color);
 			break;
 		}
@@ -291,8 +278,8 @@ void CPaintAppMFCView::OnMouseMove(UINT nFlags, CPoint point)
 
 void CPaintAppMFCView::OnFileNew()
 {
-	m_MDC.FillSolidRect(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, RGB(255, 255, 255));
-	m_SDC.FillSolidRect(0, 0, m_rect.Width() + 500, m_rect.Height() + 500, RGB(255, 255, 255));
+	m_MDC.FillSolidRect(0, 0, m_rect.Width() , m_rect.Height() , RGB(255, 255, 255));
+	m_SDC.FillSolidRect(0, 0, m_rect.Width() , m_rect.Height() , RGB(255, 255, 255));
 	FileName = "";
 	Invalidate(true);
 }
