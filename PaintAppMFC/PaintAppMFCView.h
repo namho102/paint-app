@@ -16,24 +16,27 @@ public:
 	CPaintAppMFCDoc* GetDocument() const;
 	CPoint pointStart;
 	CPoint pointFrom;
-
+	
 	int pWidth;
 	COLORREF m_Color;
 	UINT chooseColor;
 	UINT dType;
+
 	CRect m_rect;
 	CDC m_MDC;
 	CBitmap m_bmpMDC;
 	CDC m_SDC;
 	CBitmap m_bmpSDC;
+
 	CDC  m_lastDC[100];
 	CBitmap m_lastBitmap[100];
 	int index = 0;
 	CRect m_selectRect;
+
 	CString FileName;
 	HBITMAP hBitmap;
-	CPoint CursorLocation;
 
+	CPoint CursorLocation;
 // Operations
 public:
 	void OnInitialUpdate();
@@ -45,7 +48,6 @@ protected:
 	virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);
 	virtual void OnBeginPrinting(CDC* pDC, CPrintInfo* pInfo);
 	virtual void OnEndPrinting(CDC* pDC, CPrintInfo* pInfo);
-
 // Implementation
 public:
 	virtual ~CPaintAppMFCView();
@@ -60,15 +62,22 @@ protected:
 protected:
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnColors(UINT nID);
 	afx_msg void OnDrawTools(UINT nID);
-	//afx_msg void OnToolsFree();
+	afx_msg void OnUpdateDrawTools(CCmdUI* pCmdUI);
+	afx_msg void OnColors(UINT nID);
+	afx_msg void OnUpdateColors(CCmdUI* pCmdUI);
+	afx_msg void OnColorsPallette();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	//virtual void OnInitialUpdate();
 	afx_msg void OnFileNew();
 	afx_msg void OnFileOpen();
+	afx_msg void OnFileSave();
+	afx_msg void OnFileSaveAs();
+	afx_msg void OnEditCopy();
+	afx_msg void OnEditPaste();
+	afx_msg void OnEditCut();
+	afx_msg void OnEditUndo();
 };
 
 #ifndef _DEBUG  // debug version in PaintAppMFCView.cpp

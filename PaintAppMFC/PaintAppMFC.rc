@@ -70,9 +70,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\PaintAppMFC.ico"
-
 IDR_PaintAppMFCTYPE     ICON                    "res\\PaintAppMFCDoc.ico"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -80,13 +78,8 @@ IDR_PaintAppMFCTYPE     ICON                    "res\\PaintAppMFCDoc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-
 IDR_DRAWTOOLBAR         BITMAP                  "res\\toolbar1.bmp"
-
-IDRETRY                 BITMAP                  "res\\bmp00001.bmp"
-
-IDR_COLORTOOLBAR        BITMAP                  "res\\bmp00002.bmp"
-
+IDR_COLORTOOLBAR        BITMAP                  "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -110,21 +103,29 @@ END
 IDR_DRAWTOOLBAR TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_TOOLS_FREE
-    BUTTON      ID_TOOLS_ERASE
-    BUTTON      ID_TOOLS_SPRAY
+    BUTTON      ID_TOOLS_BRUSH
+    BUTTON      ID_TOOLS_AIRBRUSH
+    BUTTON      ID_TOOLS_FILL
     BUTTON      ID_TOOLS_LINE
+    BUTTON      ID_TOOLS_CURVE
+    BUTTON      ID_TOOLS_RECTANGLE
+    BUTTON      ID_TOOLS_CIRCLE
+    BUTTON      ID_TOOLS_TEXT
+    BUTTON      ID_TOOLS_SELECT
+    BUTTON      ID_TOOLS_ZOOM
 END
 
 IDR_COLORTOOLBAR TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_COLORS_BLACK
-    BUTTON      ID_COLORS_WHITE
-    BUTTON      ID_COLORS_RED
-    BUTTON      ID_COLORS_YELLOW
-    BUTTON      ID_COLORS_GREEN
     BUTTON      ID_COLORS_BLUE
-    BUTTON      ID_COLORS_CYAN
-    BUTTON      ID_COLORS_MAGENTA
+    BUTTON      ID_COLORS_GREEN
+    BUTTON      ID_COLORS_SKY
+    BUTTON      ID_COLORS_RED
+    BUTTON      ID_COLORS_LOTUS
+    BUTTON      ID_COLORS_YELLOW
+    BUTTON      ID_COLORS_WHITE
+    BUTTON      ID_COLORS_PALLETTE
 END
 
 
@@ -206,7 +207,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
     LTEXT           "PaintAppMFC, Version 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2016",IDC_STATIC,42,26,114,8
+    LTEXT           "Copyright (C) 2015",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "OK",IDOK,113,41,50,14,WS_GROUP
 END
 

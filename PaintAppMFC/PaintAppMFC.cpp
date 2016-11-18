@@ -20,10 +20,8 @@
 
 BEGIN_MESSAGE_MAP(CPaintAppMFCApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &CPaintAppMFCApp::OnAppAbout)
-	// Standard file based document commands
-	//ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
-	//ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
-	// Standard print setup command
+	/*ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
+	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)*/
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
@@ -145,9 +143,7 @@ public:
 	CAboutDlg();
 
 // Dialog Data
-#ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
-#endif
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -157,7 +153,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
+CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
 {
 }
 

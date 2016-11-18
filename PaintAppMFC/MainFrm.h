@@ -6,21 +6,21 @@
 
 class CMainFrame : public CFrameWnd
 {
-
+	
 protected: // create from serialization only
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
 
-	// Attributes
+// Attributes
 public:
-	// Operations
+// Operations
 public:
 	void SetColumns(int nCols, CToolBar& tbToolBox);
-	// Overrides
+// Overrides
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-	// Implementation
+// Implementation
 public:
 	virtual ~CMainFrame();
 #ifdef _DEBUG
@@ -33,7 +33,7 @@ protected:  // control bar embedded members
 	CStatusBar        m_wndStatusBar;
 	CToolBar		  m_wndDrawToolBar;
 	CToolBar		  m_wndColorToolBar;
-	// Generated message map functions
+// Generated message map functions
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()

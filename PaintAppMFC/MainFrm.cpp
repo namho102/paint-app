@@ -15,10 +15,6 @@
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 
-const int  iMaxUserToolbars = 10;
-const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
-const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
-
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
@@ -84,7 +80,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
-	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators) / sizeof(UINT));
+	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
 
 	// TODO: Delete these three lines if you don't want the toolbar to be dockable
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
@@ -118,7 +114,6 @@ void CMainFrame::Dump(CDumpContext& dc) const
 	CFrameWnd::Dump(dc);
 }
 #endif //_DEBUG
-
 void CMainFrame::SetColumns(int nCols, CToolBar& tbToolBox)
 {
 	int nColumns = nCols;
@@ -135,6 +130,7 @@ void CMainFrame::SetColumns(int nCols, CToolBar& tbToolBox)
 	}
 	RecalcLayout();  Invalidate();
 }
+
 
 // CMainFrame message handlers
 
